@@ -2,13 +2,19 @@ import { Page } from 'puppeteer';
 import { PuppeteerService } from 'services/puppeteer/puppeteer.service';
 import * as fs from 'fs';
 import { rm, mkdir } from 'node:fs/promises';
+import path from 'path';
 
 export class Authorization {
   page: Page;
-  directoryPath = './screenshots';
   constructor(private readonly browser: PuppeteerService) {
     this.page = this.browser.page;
   }
+
+  private static readonly SCREENSHOTS_FOLDER = path.join(
+    process.cwd(),
+    process.env.SCREENSHOTS_FOLDER || 'screenshots',
+    'cookie.json',
+  );
 
   async authorization(): Promise<void> {
     try {
@@ -96,7 +102,7 @@ export class Authorization {
 
   private async takeScreenshotAndSave(screenshotName: string): Promise<void> {
     if (process.env.NODE_ENV === 'development') {
-      const screenshotsDir = this.directoryPath;
+      const screenshotsDir = Authorization.SCREENSHOTS_FOLDER;
 
       // Проверяем и создаем директорию
       try {
@@ -121,10 +127,11 @@ export class Authorization {
 
   private async clearDirectory(): Promise<void> {
     try {
+      const screenshotsDir = Authorization.SCREENSHOTS_FOLDER;
       // Удаляем директорию и её содержимое
-      await rm(this.directoryPath, { recursive: true, force: true });
+      await rm(screenshotsDir, { recursive: true, force: true });
       // Создаём директорию заново
-      await mkdir(this.directoryPath, { recursive: true });
+      await mkdir(screenshotsDir, { recursive: true });
     } catch (error) {
       console.error('Ошибка при очистке директории:', error);
       throw error;

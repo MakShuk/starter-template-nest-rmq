@@ -22,7 +22,11 @@ export class PuppeteerService {
     defaultViewport: { width: 1080, height: 1024 },
   };
 
-  private static readonly COOKIE_PATH = path.join(process.cwd(), 'sessions', 'cookie.json');
+  private static readonly COOKIE_PATH = path.join(
+    process.cwd(),
+    process.env.COOKIE_FOLDER || 'cookies',
+    'cookie.json',
+  );
 
   async initialize(): Promise<void> {
     try {
