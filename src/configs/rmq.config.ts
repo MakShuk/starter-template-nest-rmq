@@ -15,7 +15,11 @@ interface RMQConfig {
 // Константы для значений по умолчанию
 const DEFAULT_CONFIG = {
   PREFETCH_COUNT: 32,
+<<<<<<< HEAD
   SERVICE_NAME: 'gpt',
+=======
+  SERVICE_NAME: 'summary',
+>>>>>>> 5102cf59a4c4ef73267116a14c8fbb8cd6a20010
   DURABLE: true,
 } as const;
 
