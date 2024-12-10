@@ -1,7 +1,7 @@
-import { IsNotEmpty, IsNumber, IsString, MinLength } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, IsUrl, MinLength } from 'class-validator';
 
-export namespace SummaryCreate {
-  export const topic = 'summary.create.query';
+export namespace SummaryShortCreate {
+  export const topic = 'summary.short.query';
 
   export class Request {
     @IsNumber()
@@ -19,10 +19,38 @@ export namespace SummaryCreate {
   }
 
   export class Response {
-    @IsString()
+    @IsNotEmpty()
+    @IsString({ each: true })
+    // @ts-ignore
+    summary: string[];
+
+    @IsNumber()
+    // @ts-ignore
+    messageId: number;
+  }
+}
+
+export namespace SummaryUrlShortCreate {
+  export const topic = 'summary.url-short.query';
+
+  export class Request {
+    @IsNumber()
     @IsNotEmpty()
     // @ts-ignore
-    summary: string;
+    messageId: number;
+
+    @IsUrl()
+    @IsNotEmpty()
+
+    // @ts-ignore
+    url: string;
+  }
+
+  export class Response {
+    @IsNotEmpty()
+    @IsString({ each: true })
+    // @ts-ignore
+    summary: string[];
 
     @IsNumber()
     // @ts-ignore

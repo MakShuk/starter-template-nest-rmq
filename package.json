@@ -21,7 +21,6 @@
     "@nestjs/platform-express": "^10.0.0",
     "@types/joi": "^17.2.3",
     "@types/puppeteer": "^7.0.4",
-    "@verdaccio/logging": "^1.0.0",
     "chromium-bidi": "^0.10.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",

@@ -13,48 +13,46 @@ export class Authorization {
   private static readonly SCREENSHOTS_FOLDER = path.join(
     process.cwd(),
     process.env.SCREENSHOTS_FOLDER || 'screenshots',
-    'cookie.json',
   );
 
   async authorization(): Promise<void> {
     try {
       if (await this.isAuthorization(this.page)) {
-        console.log('Авторизация пройдена');
         return;
+      } else {
+
+        await this.clearDirectory();
+
+        await this.acceptCookies();
+        await this.takeScreenshotAndSave('1.acceptCookies');
+
+        await this.login();
+        await this.takeScreenshotAndSave('2.login');
+        await this.browser.page.waitForFunction(() => document.readyState === 'complete');
+        await this.delay(2000);
+
+        await this.setLogin(process.env.YA_LOGIN || '');
+        await this.takeScreenshotAndSave('3.setLogin');
+        await this.delay(2000);
+
+        await this.login();
+        await this.takeScreenshotAndSave('4.login2');
+        await this.delay(2000);
+
+        await this.setPassword(process.env.YA_PASSWORD || '');
+        await this.takeScreenshotAndSave('5.setPassword');
+
+        await this.final();
+        await this.takeScreenshotAndSave('6.final');
+
+        await this.delay(2000);
+        await this.takeScreenshotAndSave('7.result');
+        await this.browser.cleanup();
       }
-
-      await this.clearDirectory();
-
-      await this.acceptCookies();
-      await this.takeScreenshotAndSave('1.acceptCookies');
-
-      await this.login();
-      await this.takeScreenshotAndSave('2.login');
-      await this.browser.page.waitForFunction(() => document.readyState === 'complete');
-      await this.delay(2000);
-
-      await this.setLogin(process.env.YA_LOGIN || '');
-      await this.takeScreenshotAndSave('3.setLogin');
-      await this.delay(2000);
-
-      await this.login();
-      await this.takeScreenshotAndSave('4.login2');
-      await this.delay(2000);
-
-      await this.setPassword(process.env.YA_PASSWORD || '');
-      await this.takeScreenshotAndSave('5.setPassword');
-
-      await this.final();
-      await this.takeScreenshotAndSave('6.final');
-
-      await this.delay(4000);
-      await this.takeScreenshotAndSave('7.result');
-
-      this.browser.cleanup();
     } catch (error) {
       await this.takeScreenshotAndSave('error');
-      this.browser.cleanup();
       console.error('An error occurred:', error);
+      await this.browser.cleanup();
     }
   }
 
@@ -93,7 +91,7 @@ export class Authorization {
     try {
       const inputSelector = `a.avatar-link.svelte-rymmbg`;
       await page.focus(inputSelector);
-      await this.takeScreenshotAndSave('0.checkAuthorization');
+      await this.takeScreenshotAndSave('check-authorization');
       return true;
     } catch (error) {
       return false;
@@ -128,9 +126,7 @@ export class Authorization {
   private async clearDirectory(): Promise<void> {
     try {
       const screenshotsDir = Authorization.SCREENSHOTS_FOLDER;
-      // Удаляем директорию и её содержимое
       await rm(screenshotsDir, { recursive: true, force: true });
-      // Создаём директорию заново
       await mkdir(screenshotsDir, { recursive: true });
     } catch (error) {
       console.error('Ошибка при очистке директории:', error);

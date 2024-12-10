@@ -112,13 +112,13 @@ export class PuppeteerService {
   async saveCookies(): Promise<void> {
     try {
       this.validatePageInitialized();
+      await this.ensureCookieFolderExists();
       const cookies = await this.page!.cookies();
       await fs.writeFile(PuppeteerService.COOKIE_PATH, JSON.stringify(cookies, null, 2));
     } catch (error) {
       throw this.createError('cookie saving', error);
     }
   }
-
   async cleanup(): Promise<void> {
     try {
       if (this.page) {
@@ -144,5 +144,13 @@ export class PuppeteerService {
 
   private isFileNotFoundError(error: unknown): boolean {
     return (error as NodeJS.ErrnoException).code === 'ENOENT';
+  }
+
+  private async ensureCookieFolderExists(): Promise<void> {
+    try {
+      await fs.mkdir(path.dirname(PuppeteerService.COOKIE_PATH), { recursive: true });
+    } catch (error) {
+      throw this.createError('cookie folder creation', error);
+    }
   }
 }

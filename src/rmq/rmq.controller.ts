@@ -1,25 +1,34 @@
 import { Body, Controller } from '@nestjs/common';
-import { RmqService } from './rmq.service';
+import { SummaryService } from './text-summary.service';
 import { RMQRoute, RMQValidate } from 'nestjs-rmq';
-import { SummaryCreate } from 'contracts/summary.create';
-import { LoggerService } from '@verdaccio/logging';
+import { SummaryShortCreate, SummaryUrlShortCreate } from 'contracts/summary.create';
 
 @Controller()
 export class RmqController {
-  constructor(
-    readonly rmqService: RmqService,
-    readonly logger: LoggerService,
-  ) {}
+  constructor(private readonly summary: SummaryService) {}
 
   @RMQValidate()
-  @RMQRoute(SummaryCreate.topic)
-  async summary(@Body() massageDto: SummaryCreate.Request): Promise<SummaryCreate.Response> {
-    this.logger.setPrefix(`summary`);
-    const timer = this.logger.startTimer('Загрузка данных');
-    await this.rmqService.start();
-    timer();
+  @RMQRoute(SummaryShortCreate.topic)
+  async getShortSummary(
+    @Body() massageDto: SummaryShortCreate.Request,
+  ): Promise<SummaryShortCreate.Response> {
+    const res = await this.summary.getSummaryForText(massageDto.originalText);
+    console.log(res);
     return {
-      summary: massageDto.originalText,
+      summary: res,
+      messageId: massageDto.messageId,
+    };
+  }
+
+  @RMQValidate()
+  @RMQRoute(SummaryUrlShortCreate.topic)
+  async getShortUrlSummary(
+    @Body() massageDto: SummaryUrlShortCreate.Request,
+  ): Promise<SummaryUrlShortCreate.Response> {
+    const res = await this.summary.getSummaryForText(massageDto.url);
+    console.log(res);
+    return {
+      summary: res,
       messageId: massageDto.messageId,
     };
   }
