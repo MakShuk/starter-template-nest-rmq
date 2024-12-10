@@ -15,14 +15,13 @@ export const configValidationSchema = Joi.object({
   AMQP_PASSWORD: Joi.string().required().description('RabbitMQ password'),
   AMQP_HOSTNAME: Joi.string().default('localhost').required().description('RabbitMQ host'),
   AMQP_QUEUE: Joi.string().required().description('RabbitMQ queue name'),
-<<<<<<< HEAD
 
   // Additional Configurations
   PROXY: Joi.string()
     .description('Proxy URL'),
   OPEN_AI_KEY: Joi.string()
     .description('OpenAI API Key'),
-=======
+
   YA_LOGIN: Joi.string().required().description('Yandex login'),
   YA_PASSWORD: Joi.string().required().description('Yandex password'),
   SCREENSHOTS_FOLDER: Joi.string()
@@ -31,5 +30,4 @@ export const configValidationSchema = Joi.object({
   COOKIE_FOLDER: Joi.string()
     .default(ENV_VALUES.PATHS.SCREENSHOTS_FOLDER)
     .description('Folder for cookies'),
->>>>>>> 5102cf59a4c4ef73267116a14c8fbb8cd6a20010
 });
