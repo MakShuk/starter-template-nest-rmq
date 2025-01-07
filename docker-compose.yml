@@ -1,0 +1,25 @@
+version: '3'
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: trade-hub
+    networks:
+      - message_broker_network
+    environment:
+      - NODE_ENV=production
+      - TZ=Europe/Moscow
+    volumes:
+      - ./envs:/app/envs
+    restart: unless-stopped
+    ports:
+      - "5888:5888"
+volumes:
+  rabbitmq_data:
+    name: rabbitmq_persistent_data
+
+networks:
+  message_broker_network:
+    name: rabbitmq_network
+    driver: bridge

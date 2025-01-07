@@ -1,42 +1,32 @@
 {
     "cSpell.words": [
-        "резолва",
+        "figi",
         "IRMQ",
+        "makshuk",
         "Maksim",
+        "marketdata",
         "Parens",
-        "Shuklin"
+        "rabbitmq",
+        "Shuklin",
+        "tinkoff",
+        "UTSTOM",
+        "резолва"
     ],
     "files.exclude": {
-        "**/.git": false,
-        "**/.svn": false,
-        "**/.hg": false,
-        "**/CVS": false,
-        "**/.DS_Store": false,
-        "**/node_modules": false,
-        "**/dist": false,
-        "**/.nx": false,
-        "**/.vscode": false,
-        "**/.github": false,
-        "**/nx.json": false,
-        "**/tsconfig.base.json": false,
-        "**/tsconfig.json": false,
-        "**/.prettierrc": false,
-        "**/.prettierignore": false,
-        "**/package.json": false,
-        "**/package-lock.json": false,
-        "**/.eslintrc.json": false,
-        "**/.eslintignore": false,
-        "**/.gitignore": false,
-        "**/.editorconfig": false,
-        "**/webpack.config.js": false,
-        "**/tsconfig.spec.json": false,
-        "**/tsconfig.app.json": false,
-        "**/tsconfig.lib.json": false,
-        "**/README.md": false,
-        "**/.gitkeep": false,
-        "**/project.json": false,
-        "**/tsconfig.build.json": false,
-        "**/.eslintrc.js": false,
-        "**/nest-cli.json": false
-    }
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "dist": true,
+        "node_modules": true,
+        ".vscode": true
+    },
+    "hide-files.files": [
+        "dist",
+        "node_modules",
+        ".vscode"
+    ],
+    "files.autoSave": "afterDelay"
 }
