@@ -1,10 +1,10 @@
-version: '3'
-services:
+version: '3.8'
+services: starter-template
   app:
     build: 
       context: .
       dockerfile: Dockerfile
-    container_name: trade-hub
+    container_name: 
     networks:
       - message_broker_network
     environment:
@@ -15,9 +15,6 @@ services:
     restart: unless-stopped
     ports:
       - "5888:5888"
-volumes:
-  rabbitmq_data:
-    name: rabbitmq_persistent_data
 
 networks:
   message_broker_network:

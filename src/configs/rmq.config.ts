@@ -15,8 +15,11 @@ interface RMQConfig {
 // Константы для значений по умолчанию
 const DEFAULT_CONFIG = {
   PREFETCH_COUNT: 32,
-  SERVICE_NAME: 'mak',
+  SERVICE_NAME: 'rmq-template',
   DURABLE: true,
+  DEAD_LETTER_EXCHANGE: 'dlx-exchange',
+  DEAD_LETTER_ROUTING_KEY: 'expired.queue',
+  MESSAGE_TTL: 35000,
 } as const;
 
 // Функция для получения конфигурации
@@ -51,6 +54,11 @@ export const getRMQConfig = (): IRMQServiceAsyncOptions => ({
       durable: DEFAULT_CONFIG.DURABLE,
       prefetchCount: config.prefetchCount,
       serviceName: config.serviceName,
+      queueOptions: {
+        deadLetterExchange: DEFAULT_CONFIG.DEAD_LETTER_EXCHANGE,
+        deadLetterRoutingKey: DEFAULT_CONFIG.DEAD_LETTER_ROUTING_KEY,
+        messageTtl: DEFAULT_CONFIG.MESSAGE_TTL,
+      },
     };
   },
 });
