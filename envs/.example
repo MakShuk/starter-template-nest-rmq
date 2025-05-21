@@ -1,0 +1,19 @@
+# Пример файла переменных окружения для NestJS + RabbitMQ
+
+# Порт приложения
+PORT=3000
+
+# Окружение (development, production)
+NODE_ENV=development
+
+# URI для подключения к RabbitMQ
+RMQ_URI=amqp://user:password@localhost:5672
+
+# Название очереди RabbitMQ
+RMQ_QUEUE=main_queue
+
+# JWT секрет
+JWT_SECRET=your_jwt_secret
+
+# Пример дополнительной переменной
+CUSTOM_VARIABLE=example_value
