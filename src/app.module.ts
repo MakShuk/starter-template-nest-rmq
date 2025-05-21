@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { getConfigModuleOptions } from './configs/config/config.module';
+import { getConfigModuleOptions } from './configs/env-config/config.module';
 import { RMQModule } from 'nestjs-rmq';
 import { getRMQConfig } from './configs/rmq.config';
 
